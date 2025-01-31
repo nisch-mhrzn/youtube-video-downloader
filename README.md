@@ -103,5 +103,5 @@ If you’d like to improve this project, feel free to fork the repository and su
 
 ## 📩 Contact
 📧 Email: nischal.maharjan1233@gmail.com  
-🔗 GitHub: [YourGitHubProfile](https://github.com/nisch-mhrzn)
+🔗 GitHub: [GitHubProfile](https://github.com/nisch-mhrzn)
 
