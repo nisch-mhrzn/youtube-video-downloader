@@ -1,29 +1,41 @@
 import tkinter as tk
+from tkinter import messagebox
 from pytube import YouTube
 
-
-#Display Window
+# Initialize Tkinter window
 dock = tk.Tk()
 dock.geometry('500x300')
-dock.resizable(0,0)
-dock.title("Youtube Video Downloader")
+dock.resizable(0, 0)
+dock.title("YouTube Video Downloader")
 
-tk.Label(dock, text ="Youtube Video Downloader", font ="arial 20 bold").pack()
+# Title Label
+tk.Label(dock, text="YouTube Video Downloader", font="arial 20 bold").pack(pady=10)
 
-#Enter the URL
+# URL Input
 link = tk.StringVar()
+tk.Label(dock, text="Paste Link Here:", font="arial 12 bold").pack()
+entry = tk.Entry(dock, width=60, textvariable=link)
+entry.pack(pady=5)
 
-tk.Label(dock, text ="Paste Link Here:", font ="arial 15 bold").place(x=160, y=60)
-link_error = tk.Entry(dock, width =70, textvariable = link).place(x =32, y=90)
-
-#Function to download the video
+# Function to download the video
 def Downloader():
-    url =YouTube(str(link.get()))
-    video =url.streams.first()
-    video.download()
-    tk.Label(dock, text ="Successfully Downloaded", font ="arial 15").place(x =180, y =200)
+    url_text = link.get().strip()
+    
+    if not url_text:
+        messagebox.showerror("Error", "Please enter a valid URL")
+        return
 
-#Download Button
-tk.Button(dock, text ="DOWNLOAD", font ="Verdana 15 bold", bg ="orange", padx =2, command =Downloader).place(x=180, y=150)
+    try:
+        yt = YouTube(url_text)
+        video = yt.streams.get_highest_resolution()  # Get highest quality
+        messagebox.showinfo("Downloading", f"Downloading: {yt.title}")
+        video.download()
+        messagebox.showinfo("Success", "Download Completed Successfully!")
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to download: {e}")
 
+# Download Button
+tk.Button(dock, text="DOWNLOAD", font="Verdana 12 bold", bg="orange", padx=10, command=Downloader).pack(pady=15)
+
+# Start Tkinter loop
 dock.mainloop()
